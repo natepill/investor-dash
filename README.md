@@ -1,6 +1,6 @@
 **Version 1.0.0**
 
-#Description
+## Description
 <Description of project>
 <Why this project exists>
 
@@ -8,7 +8,7 @@
 ## Run the app
 
 
-## TODO (What features we're working on)
+## TO DO (Features, Add-ons, Design)
 
 ## Bugs
 
