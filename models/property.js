@@ -4,15 +4,60 @@ const mongoose = require('mongoose');
 
 
 const Property = mongoose.model('Property', {
-  address: String,
-  beds: Number,
-  baths: Number,
-  price: Number,
-  roi: Number,
-  cashflow: Number,
-  description: Number,
-  amount: Number
+
+  address:{
+      type: String,
+      required: true,
+      trim: true,
+      default: "DEFAULT ADDRESS"
+  },
+  beds:{
+      type: Number,
+      required: false,
+      trim: true,
+      default: 1
+  },
+  baths: {
+      type: Number,
+      required: false,
+      trim: true,
+      default: 2
+  },
+  size:{
+      type: Number,
+      required: false,
+      trim: true,
+      default: 3
+  },
+  price: {
+      type: Number,
+      required: true,
+      trim: true,
+      default: 100000
+  },
+  realestateprovider: {
+      type: String,
+      required: true,
+      trim: true,
+      default: "REAL ESTATE PROVIDER"
+  },
+
+  roi: {
+      type: Number,
+      required: true,
+      trim: true,
+      default: 9999
+  },
+  cashflow: {
+      type: Number,
+      required: true,
+      trim: true,
+      default: 00000
+  }
 });
 
 
-module.exports = Property
+
+
+
+module.exports = {Property}
