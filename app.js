@@ -1,41 +1,100 @@
+const {mongoose} = require('./db/mongoose');
 
 const express = require('express')
 const app = express()
-var exphbs = require('express-handlebars');
-const bodyParser = require('body-parser')
+const exphbs = require('express-handlebars');
+const bodyParser = require('body-parser');
 
 
-//Uncomment when we have mongo added
-// var mongoose = require('mongoose');
-// mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost/<name of mongodb>');
+const fs = require('fs');
+const request = require('request')
 
+const csv = require('csvtojson')
+const csvFilePath = 'properties-22039.csv'
 const port = process.env.PORT || 3000;
 
-app.use(bodyParser.urlencoded({extended: true}));
+
 app.engine('handlebars', exphbs({defaultLayout: 'main'}));
 app.set('view engine', 'handlebars');
 
-app.get('/', (req, res) => {
+var {Property} = require('./models/property');
 
-    res.render('home', {msg:'Check out our other properties'});
+
+app.get('/zillow', (req, res) => {
+    // res.render('home', {msg:'Check out our other properties'});
+
+    const {spawn} = require('child_process');
+    const pyProg = spawn('python', ['./scrape.py', '94102']);
+
+    pyProg.stdout.on('data', function(data) {
+
+    res.send(data.toString());
+    console.log(data.toString());
+    res.write(data);
+    res.end('end');
+
+    });
+
 })
+
+
+
+app.post('/property-cards', (req, res) => {
+    let returnProps = [];
+    //Web Scraper for Zillow already created csv file for zipcode 22039
+    //Convert csv file of properties in zipcode to an array of JSON objects
+
+
+    //Could probably refactor the (what will be) API request to the property csv
+    csv().fromFile(csvFilePath).then((jsonArray)=>{
+        jsonArray.forEach(function(prop) {
+            const card = new Property({
+                address: prop.address,
+                beds: prop['facts and features'],
+                baths: prop['facts and features'],
+                size: prop['facts and features'],
+                price: prop.price,
+                realestateprovider: prop['real estate provider']
+            });
+
+            card.save().catch((err) => {
+                console.log(err);
+            });
+        });
+        res.json(jsonArray);
+    })
+});
+
+
+
 
 app.listen(port, () => {
     console.log(`Listening on port ${port}`)
 })
 
-app.post('/home', (req, res) => {
-    console.log(req.body)
-    // res.render('detail_view',{})
-})
 
-app.get('/detail_view', (req, res) => {
-    res.render('detail_view', {})
-})
-
-app.get('/properties_view', (req, res) => {
-    var properties = [{price: 485289, bedrooms: 2, bathrooms: 2, address: "245 South Market st." }, {price: 485289, bedrooms: 2, bathrooms: 2, address: "2451 South Market st." },{price: 485289, bedrooms: 2, bathrooms: 2, address: "4245 South second st." },{price: 4859289, bedrooms: 2, bathrooms: 2, address: "245 South Market st." },{price: 485289, bedrooms: 2, bathrooms: 2, address: "245 West Market st." },{price: 485289, bedrooms: 2, bathrooms: 2, address: "245 South Market st." },{price: 485289, bedrooms: 2, bathrooms: 2, address: "245 South Market st." }
-    ]
-
-    res.render('properties_view', {properties: properties})
-})
+/*
+        //For every JSON property object in our property_array; we store their values into our Mongo Models
+    //     var i;
+    //     for (i = 0; i < jsonArray.length; i++) {
+    //         console.log(jsonArray[i]);
+    //         var card = new Property({
+    //             address: jsonArray[i].address,
+    //             beds: jsonArray[i]['facts and features'],
+    //             baths: jsonArray[i]['facts and features'],
+    //             size: jsonArray[i]['facts and features'],
+    //             price: jsonArray[i].price,
+    //             realestateprovider: jsonArray[i]['real estate provider']
+    //         })
+    //
+    //         card.save().then((property) => {
+    //             res.json(property)
+    //         }).catch((err) => {
+    //             console.log(err);
+    //         })
+    //     }
+    //
+    // }).catch((err) => {
+    //     console.log(err);
+    // })
+*/
