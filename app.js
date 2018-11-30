@@ -13,11 +13,14 @@ const csv = require('csvtojson')
 const csvFilePath = 'properties-22039.csv'
 const port = process.env.PORT || 3000;
 
+var guestProps;
+
 
 app.engine('handlebars', exphbs({defaultLayout: 'main'}));
 app.set('view engine', 'handlebars');
 
 var {Property} = require('./models/property');
+
 
 
 app.get('/zillow', (req, res) => {
@@ -38,6 +41,60 @@ app.get('/zillow', (req, res) => {
 })
 
 
+app.get('/', (req, res) => {
+    console.log()
+    res.render('home',{})
+})
+
+
+app.get('/properties_view', (req, res) => {
+    Property.find({}).then(properties => {
+    res.render('properties_view', {properties: properties})
+    }).catch((err) => {
+        console.log(err.message);
+    });
+})
+
+app.get('/dashboard', (req, res) => {
+    res.render('dashboard', {})
+})
+
+app.post('/addProperties', (req, res) => {
+    console.log("adding properties ......")
+    console.log(req.body) 
+    // Property.find({address:req.params.id}).then((property) => {
+    //         guestProps.push(property)
+    //         console.log(property)
+    //     }).catch((err) => {
+    //         console.log(err.message);
+    //     })
+        res.render('dashboard', {})
+    })
+
+    // Comment.find({reviewId: req.params.id}).then(comments => {
+    //         // respond with the template with both values
+    //         res.render('reviews-show', {review: review, comments: comments})
+    //         })
+    //     }).catch((err) => {
+    //         console.log(err.message);
+    //     });
+
+
+
+
+
+
+
+// Comment.find({reviewId: req.params.id}).then(comments => {
+//         // respond with the template with both values
+//         res.render('reviews-show', {review: review, comments: comments})
+//         })
+//     }).catch((err) => {
+//         console.log(err.message);
+//     });
+
+
+
 
 app.post('/property-cards', (req, res) => {
     let returnProps = [];
@@ -56,7 +113,6 @@ app.post('/property-cards', (req, res) => {
                 price: prop.price,
                 realestateprovider: prop['real estate provider']
             });
-
             card.save().catch((err) => {
                 console.log(err);
             });

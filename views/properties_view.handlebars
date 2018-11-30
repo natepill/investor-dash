@@ -1,3 +1,8 @@
+<!-- Top navbar with brand -->
+<nav class="navbar navbar-light bg-light justify-content-between">
+    <a class="navbar-brand">iDash</a>
+</nav>
+
 <div class="container">
     <div class="row">
         {{#each properties}}
@@ -10,8 +15,11 @@
             <p class="card-text">{{this.price}}</p>
             <div class="d-flex justify-content-between align-items-center">
               <div class="btn-group">
-                <button type="button" class="btn btn-sm btn-info">Select</button>
-                <button type="button" class="btn btn-sm btn-outline-info">More Info</button>
+                <form action="/addProperties" method="POST">
+                    <input type="text" name="selectedProp" id="selected" value="{{this.id}}">
+                    <button type="submit" class="btn btn-sm btn-info">Select</button>
+                    <button type="button" class="btn btn-sm btn-outline-info">More Info</button>
+                </form>
               </div>
               <small class="text-muted">9 mins</small>
             </div>
@@ -21,3 +29,11 @@
       {{/each}}
   </div>
 </div>
+
+<!-- <script>
+
+    addPropery() {
+        append.(this.id)
+    }
+
+</script> -->
