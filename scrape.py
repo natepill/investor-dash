@@ -2,6 +2,7 @@ from lxml import html
 import requests
 import unicodecsv as csv
 import argparse
+import sys
 
 def parse(zipcode,filter=None):
 

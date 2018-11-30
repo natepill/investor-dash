@@ -12,32 +12,32 @@ const Property = mongoose.model('Property', {
       default: "DEFAULT ADDRESS"
   },
   beds:{
-      type: Number,
+      type: String,
       required: false,
       trim: true,
       default: 1
   },
   baths: {
-      type: Number,
+      type: String,
       required: false,
       trim: true,
       default: 2
   },
   size:{
-      type: Number,
+      type: String,
       required: false,
       trim: true,
       default: 3
   },
   price: {
-      type: Number,
+      type: String,
       required: true,
       trim: true,
       default: 100000
   },
   realestateprovider: {
       type: String,
-      required: true,
+      required: false,
       trim: true,
       default: "REAL ESTATE PROVIDER"
   },
