@@ -13,11 +13,12 @@ const csv = require('csvtojson')
 const csvFilePath = 'properties-22039.csv'
 const port = process.env.PORT || 3000;
 
-var guestProps;
+var guestProps = []
 
 
 app.engine('handlebars', exphbs({defaultLayout: 'main'}));
 app.set('view engine', 'handlebars');
+app.use(bodyParser.urlencoded({extended: true}));
 
 var {Property} = require('./models/property');
 
@@ -48,6 +49,7 @@ app.get('/', (req, res) => {
 
 
 app.get('/properties_view', (req, res) => {
+
     Property.find({}).then(properties => {
     res.render('properties_view', {properties: properties})
     }).catch((err) => {
@@ -60,15 +62,24 @@ app.get('/dashboard', (req, res) => {
 })
 
 app.post('/addProperties', (req, res) => {
-    console.log("adding properties ......")
-    console.log(req.body) 
-    // Property.find({address:req.params.id}).then((property) => {
+    Property.find({_id:req.body.id}).then((property) => {
+        guestProps.push(property)
+        console.log(guestProps[0])
+        res.redirect('dashboard')
+    }).catch((err) => {
+        console.log(err.message);
+    });
+
+
+
+
+    // Property.find({address:req.params.address}).then((property) => {
     //         guestProps.push(property)
     //         console.log(property)
     //     }).catch((err) => {
     //         console.log(err.message);
     //     })
-        res.render('dashboard', {})
+        res.redirect('dashboard')
     })
 
     // Comment.find({reviewId: req.params.id}).then(comments => {
