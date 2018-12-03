@@ -57,7 +57,7 @@ app.get('/properties_view', (req, res) => {
 
 app.get('/dashboard', (req, res) => {
     console.log(guestProps)
-    res.render('dashboard', {properties: guestProps})
+    res.render('dashboard', {properties: guestProps[0]})
 })
 
 app.post('/addProperties', (req, res) => {

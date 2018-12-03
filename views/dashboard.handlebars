@@ -208,11 +208,11 @@ body {
                             <div class="card mb-4 box-shadow">
                                 <img class="card-img-top"       src="https://photos.zillowstatic.com/p_h/ISif3gsf9da5u91000000000.jpg" alt="Card image cap">
                                   <div class="card-body">
-                                      <h4 class="card-text">a{{this.address}}</h4>
-                                      <p class="card-text">b{{this.price}}</p>
+                                      <h4 class="card-text">{{this.address}}</h4>
+                                      <p class="card-text">{{this.price}}</p>
                                     <div class="d-flex justify-content-between align-items-center">
                                       <div class="btn-group">
-                                        <button type="button" class="btn btn-sm btn-outline-secondary">View</button>
+                                        <button type="button" onclick="location.href='/detail_view'" class="btn btn-sm btn-outline-secondary">View</button>
                                         <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>
                                       </div>
                                       <small class="text-muted">9 mins</small>
