@@ -43,10 +43,8 @@ app.get('/zillow', (req, res) => {
 
 
 app.get('/', (req, res) => {
-    console.log()
     res.render('home',{})
 })
-
 
 app.get('/properties_view', (req, res) => {
 
@@ -58,51 +56,37 @@ app.get('/properties_view', (req, res) => {
 })
 
 app.get('/dashboard', (req, res) => {
-    res.render('dashboard', {})
+    console.log(guestProps)
+    res.render('dashboard', {properties: guestProps})
 })
 
 app.post('/addProperties', (req, res) => {
     Property.find({_id:req.body.id}).then((property) => {
         guestProps.push(property)
-        console.log(guestProps[0])
         res.redirect('dashboard')
     }).catch((err) => {
         console.log(err.message);
     });
+})
 
+app.post('/property_selected', (req, res) => {
+    Property.find({_id:req.body.id}).then((property) => {
+        res.render('detail_view', {property: property})
+    }).catch((err) => {
+        console.log(err.message);
+    });
+})
 
+app.get('/detail_view', (req, res) => {
 
-
-    // Property.find({address:req.params.address}).then((property) => {
-    //         guestProps.push(property)
-    //         console.log(property)
-    //     }).catch((err) => {
-    //         console.log(err.message);
-    //     })
-        res.redirect('dashboard')
-    })
-
-    // Comment.find({reviewId: req.params.id}).then(comments => {
-    //         // respond with the template with both values
-    //         res.render('reviews-show', {review: review, comments: comments})
-    //         })
-    //     }).catch((err) => {
-    //         console.log(err.message);
-    //     });
+    res.render('detail_view', {})
+})
 
 
 
 
 
 
-
-// Comment.find({reviewId: req.params.id}).then(comments => {
-//         // respond with the template with both values
-//         res.render('reviews-show', {review: review, comments: comments})
-//         })
-//     }).catch((err) => {
-//         console.log(err.message);
-//     });
 
 
 
