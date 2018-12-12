@@ -14,14 +14,25 @@ const csvFilePath = 'properties-22039.csv'
 const port = process.env.PORT || 3000;
 
 var guestProps = []
-
+var propertyImgs = ['https://photos.zillowstatic.com/p_h/ISu0gpkb87ci3j0000000000.jpg'
+'https://photos.zillowstatic.com/p_h/ISa9thjfk4q1mb1000000000.jpg'
+'https://photos.zillowstatic.com/p_h/IS2b1jou26st5u1000000000.jpg'
+'https://photos.zillowstatic.com/p_h/IS2f8rubrmyr620000000000.jpg'
+'https://photos.zillowstatic.com/p_h/ISa1bqjonqe98b1000000000.jpg'
+'https://photos.zillowstatic.com/p_h/ISucd374e1a7191000000000.jpg'
+'https://photos.zillowstatic.com/p_h/ISaly9i1jhsrgc0000000000.jpg'
+'https://photos.zillowstatic.com/p_h/IS2z7cyu7z8tct0000000000.jpg'
+'https://photos.zillowstatic.com/p_h/ISa9xwx79jy8nx0000000000.jpg'
+'https://photos.zillowstatic.com/p_h/IS6uu56ffyghns0000000000.jpg'
+'https://photos.zillowstatic.com/p_h/IS2fwd4xnwitlg0000000000.jpg'
+'https://photos.zillowstatic.com/p_h/IS2b5mpchnwc860000000000.jpg'
+'https://photos.zillowstatic.com/p_h/ISmmrum0ku9no01000000000.jpg']
 
 app.engine('handlebars', exphbs({defaultLayout: 'main'}));
 app.set('view engine', 'handlebars');
 app.use(bodyParser.urlencoded({extended: true}));
 
 var {Property} = require('./models/property');
-
 
 
 app.get('/zillow', (req, res) => {
@@ -41,7 +52,6 @@ app.get('/zillow', (req, res) => {
 
 })
 
-
 app.get('/', (req, res) => {
     res.render('home',{})
 })
@@ -56,7 +66,6 @@ app.get('/properties_view', (req, res) => {
 })
 
 app.get('/dashboard', (req, res) => {
-    console.log(guestProps)
     res.render('dashboard', {properties: guestProps[0]})
 })
 
@@ -77,18 +86,16 @@ app.post('/property_selected', (req, res) => {
     });
 })
 
+// app.delete('/delete_property', (req, res) => {
+//     Property.findByIdAndRemove(req.params.id).then((property) => {
+//
+//     }
+// })
+
 app.get('/detail_view', (req, res) => {
 
     res.render('detail_view', {})
 })
-
-
-
-
-
-
-
-
 
 
 app.post('/property-cards', (req, res) => {
@@ -116,13 +123,9 @@ app.post('/property-cards', (req, res) => {
     })
 });
 
-
-
-
 app.listen(port, () => {
     console.log(`Listening on port ${port}`)
 })
-
 
 /*
         //For every JSON property object in our property_array; we store their values into our Mongo Models

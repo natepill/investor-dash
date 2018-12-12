@@ -23,6 +23,11 @@ const Property = mongoose.model('Property', {
       trim: true,
       default: 2
   },
+  img: {
+      type: String,
+      required: false,
+      default: "https://photos.zillowstatic.com/p_f/ISqtb68xppubsx0000000000.jpg"
+  },
   size:{
       type: String,
       required: false,

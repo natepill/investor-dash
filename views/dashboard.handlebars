@@ -94,7 +94,7 @@ body {
 </style>
 
 <nav class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0">
-      <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="#">iDash</a>
+      <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="/">iDash</a>
       <input class="form-control form-control-dark w-100" type="text" placeholder="Search" aria-label="Search">
       <ul class="navbar-nav px-3">
         <li class="nav-item text-nowrap">
@@ -109,7 +109,7 @@ body {
           <div class="sidebar-sticky">
             <ul class="nav flex-column">
               <li class="nav-item">
-                <a class="nav-link active" href="#">
+                <a class="nav-link active" href="/">
                   <span data-feather="home"></span>
                   Home
                   <span class="sr-only">(current)</span>
@@ -198,7 +198,6 @@ body {
           </div>
 
           <!-- <canvas class="my-4" id="myChart" width="900" height="380"></canvas> -->
-
          <div class="album py-5 bg-light">
             <div class="container">
                 <div class="row">
@@ -212,8 +211,8 @@ body {
                                       <p class="card-text">{{this.price}}</p>
                                     <div class="d-flex justify-content-between align-items-center">
                                       <div class="btn-group">
-                                        <button type="button" onclick="location.href='/detail_view'" class="btn btn-sm btn-outline-secondary">View</button>
-                                        <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>
+                                        <button type="button" onclick="location.href='/detail_view'" class="btn btn-sm btn-outline-secondary">View Details</button>
+                                        <button type="submit" onclick="removeProperty()" id={{this.id}} value={{this.address}}  class="btn btn-sm btn-outline-secondary">Delete</button>
                                       </div>
                                       <small class="text-muted">9 mins</small>
                                     </div>
@@ -255,7 +254,14 @@ body {
                </div>
              </div>
            </div> -->
-
+    <script>
+    console.log("script called")
+        function removeProperty(getVar) {
+            console.log("working")
+            getVar = document.getElementById('id').getAttribut('value')
+            console.log(getVar)
+        }
+    </script>
     <!-- Bootstrap core JavaScript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
